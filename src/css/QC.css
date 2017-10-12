@@ -1,0 +1,37 @@
+#root {
+ -fx-background-color:  linear-gradient(lightgray, gray);
+ -fx-border-color: white;
+ -fx-border-radius: 20;
+ -fx-padding: 10 10 10 10;
+ -fx-background-radius: 20;
+ 
+}
+
+#borderpanecss {
+    -fx-background-color:  #cccccc;
+    -fx-padding: 5 5 5 5;
+    -fx-border-color: black;
+
+}
+
+#buttoncss {
+    -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: #999999;
+    
+ 
+}
+
+#comboboxcss {
+    
+    /*-fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;*/
+    
+ 
+}
+
+#textcss {
+    -fx-background-color: #cccccc;
+    
+}
+
