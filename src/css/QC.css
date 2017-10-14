@@ -9,7 +9,8 @@
 
 #borderpanecss {
     -fx-background-color:  #cccccc;
-    -fx-padding: 5 5 5 5;
+    
+    -fx-padding: 5 5 20 5;
     -fx-border-color: black;
 
 }

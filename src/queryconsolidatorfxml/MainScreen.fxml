@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,28 +15,40 @@
 
 <BorderPane id="borderpanecss" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="481.0" stylesheets="@../css/QC.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="queryconsolidatorfxml.MainScreenController">
    <top>
-      <GridPane prefHeight="45.0" prefWidth="516.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="44.0" prefWidth="469.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="174.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="213.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="122.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="192.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="117.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="exitMainBtn" mnemonicParsing="false" onAction="#exitMain" prefWidth="39.0" text="EXIT" />
+            <Button fx:id="btnExitMain" mnemonicParsing="false" onAction="#actionExitMain" prefWidth="39.0" text="EXIT" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please Select a Server" wrappingWidth="142.701171875" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
             <ComboBox id="comboboxcss" fx:id="comboMain" onAction="#selectedServer" prefHeight="25.0" prefWidth="110.0" promptText="Server" GridPane.columnIndex="2" />
+            <Label fx:id="lblServer" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="6.0" />
+               </padding>
+            </Label>
          </children>
       </GridPane>
    </top>
    <center>
-      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="235.0" prefWidth="366.0" style="-fx-border-color: red;" BorderPane.alignment="CENTER">
+      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="269.0" prefWidth="366.0" style="-fx-border-color: Grey;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="366.0" minWidth="10.0" prefWidth="122.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="0.0" prefWidth="239.0" />
@@ -73,8 +86,8 @@
             </Text>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <TextField alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="35.0" />
-                  <Button fx:id="selectMainBtn" mnemonicParsing="false" onAction="#selectMain" text="Select" />
+                  <TextField fx:id="tfSelect" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="35.0" />
+                  <Button fx:id="btnSelectMain" mnemonicParsing="false" onAction="#actionSelectMain" text="Select" />
                </children>
             </HBox>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Client Usage" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -92,6 +105,14 @@
                   <Font size="18.0" />
                </font>
             </Text>
+            <Label fx:id="lblSelect" GridPane.rowIndex="4">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <padding>
+                  <Insets left="4.0" />
+               </padding>
+            </Label>
          </children>
       </GridPane>
    </center>
