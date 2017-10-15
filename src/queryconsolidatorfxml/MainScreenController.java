@@ -34,11 +34,16 @@ import javafx.stage.Stage;
  */
 public class MainScreenController implements Initializable {
 
-    Stage stage; 
+    Stage stage;
     Parent root;
+    
+    private final String clientUsage = "ClientUsage.fxml";
+    private final String clientWeeklyInfo = "ClientWeelyInfo.fxml";
+    
     Verify verify = new Verify(); //Create instance of verify class
+    private final static int OPTIONS_BEGIN = 1, OPTIONS_END = 3;
 
-    //Labels to populate if server not selected user errors on selections
+    //Labels to populate if server not selected and user errors on option select
     @FXML
     private Label lblServer;
     @FXML
@@ -51,10 +56,12 @@ public class MainScreenController implements Initializable {
     private ComboBox comboMain;
 
     public String comboValueSelected;
+    
+    //Create instance of scene controller to load different scene.
+    SceneController sceneController = new SceneController();
 
     @FXML
     private void actionExitMain(ActionEvent event) {
-        System.out.println("You clicked me!");
         System.out.println("java version: " + System.getProperty("java.version"));
         System.out.println("javafx.version: " + System.getProperty("javafx.version"));
     }
@@ -62,8 +69,6 @@ public class MainScreenController implements Initializable {
     @FXML
     private void actionSelectMain(ActionEvent event) {
 
-        //lblServer.setText("");
-        //lblSelect.setText("");
         boolean check = true;
 
         //Make sure they selected a server
@@ -74,68 +79,68 @@ public class MainScreenController implements Initializable {
             check = false;
 
         }
-        
+
         //If server is selected check the selection is make
         if (check != false && !verify.isData(tfSelect)) {
-            
+
             lblServer.setText("");
             lblSelect.setText("Selection blank");
             check = false;
             tfSelect.requestFocus();
-            
+
         }
-        
+
+        //If server selected and data, check that it's an integer
         if (check != false && !verify.isInt(tfSelect)) {
-            
+
             lblServer.setText("");
-            
             lblSelect.setText("Must be Integer");
             check = false;
             tfSelect.requestFocus();
-        
-            
+
         }
-        
-        
 
-        /*if (!verify.isInt(tfSelect)) {
+        //Check if server selected, data, and is int, check selection is in range
+        if (check != false && !verify.isRange(tfSelect, OPTIONS_BEGIN, OPTIONS_END)) {
 
-            lblSelect.setText("Invalid-not integer");
-            tfSelect.requestFocus();
+            lblServer.setText("");
+            lblSelect.setText("Invalid Option");
             check = false;
+            tfSelect.requestFocus();
 
-        }*/
+        }
 
-        /*if ("Server1".equals(comboValueSelected)) {
-            
-           //Get reference to the Stage the current scene is on (only 1 in this program)
-           stage = (Stage) selectMainBtn.getScene().getWindow();
+        if (check) {
+
+            //Get reference to the Stage the current scene is on (only 1 
+            //in this program) by finding the stage comboMain is on
+            stage = (Stage) comboMain.getScene().getWindow();
+
             try {
                 //root = FXMLLoader.load(getClass().getResource("ClientUsage.fxml"));
-                
+
                 //Load the Client Usage FXML.  Done in two steps so I can get 
                 //The FXML loader (theLoader) name in order to get getController()
                 //to me 
-                FXMLLoader theLoader = new FXMLLoader(getClass().getResource("ClientUsage.fxml"));
+                FXMLLoader theLoader = new FXMLLoader(getClass().getResource(clientUsage));
                 root = theLoader.load();
-                
+
                 //Get the controller and pass the server name to function in ClientUsageController
                 //In order to poplate variable there.  
-                ClientUsageController usageController = theLoader.<ClientUsageController>getController();
+                ClientUsageController usageController = theLoader.getController();
                 usageController.setServer(comboValueSelected);
-                
-                
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            stage.show();
+
         }
-        
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        
-        stage.show();*/
+
     }
 
     public void loadCombo() {
@@ -146,7 +151,7 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    public void selectedServer(ActionEvent event) {
+    public void actionSelectedServer(ActionEvent event) {
 
         comboValueSelected = (String) comboMain.getValue();
 
