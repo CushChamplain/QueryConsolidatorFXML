@@ -32,7 +32,7 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <ComboBox id="comboboxcss" fx:id="comboMain" onAction="#selectedServer" prefHeight="25.0" prefWidth="110.0" promptText="Server" GridPane.columnIndex="2" />
+            <ComboBox id="comboboxcss" fx:id="comboMain" onAction="#actionSelectedServer" prefHeight="25.0" prefWidth="110.0" promptText="Server" GridPane.columnIndex="2" />
             <Label fx:id="lblServer" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="11.0" />

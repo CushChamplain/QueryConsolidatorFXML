@@ -65,6 +65,27 @@ public class Verify {
         return boolChecks;
         
     }
+    
+     public boolean isRange(TextField tf, int begin, int end) {
+         
+         boolean boolChecks = true;
+         
+         try {
+            int i = Integer.parseInt(tf.getText());
+            
+            if (i < begin || i > end) {
+                
+                boolChecks = false;
+                
+            }
+            
+        } catch (NumberFormatException nfe) {
+            System.out.println("NumberFormatException: " + nfe.getMessage());
+            boolChecks = false;
+        }
+         
+        return boolChecks;
+     }
 
    
 } //End Subclass Verify

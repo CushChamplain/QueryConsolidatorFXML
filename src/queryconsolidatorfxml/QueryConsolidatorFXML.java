@@ -24,7 +24,6 @@ public class QueryConsolidatorFXML extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         FXMLLoader theLoader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         

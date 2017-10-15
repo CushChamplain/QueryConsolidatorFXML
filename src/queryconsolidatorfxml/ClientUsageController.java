@@ -52,7 +52,7 @@ public class ClientUsageController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
