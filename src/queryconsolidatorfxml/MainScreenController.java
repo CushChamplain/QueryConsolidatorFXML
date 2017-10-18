@@ -35,11 +35,6 @@ import javafx.stage.Stage;
 public class MainScreenController implements Initializable {
 
     Stage stage;
-    Parent root;
-    
-    private final String clientUsage = "ClientUsage.fxml";
-    private final String clientWeeklyInfo = "ClientWeelyInfo.fxml";
-    
     Verify verify = new Verify(); //Create instance of verify class
     private final static int OPTIONS_BEGIN = 1, OPTIONS_END = 3;
 
@@ -56,7 +51,9 @@ public class MainScreenController implements Initializable {
     private ComboBox comboMain;
 
     public String comboValueSelected;
-    
+
+    int select;
+
     //Create instance of scene controller to load different scene.
     SceneController sceneController = new SceneController();
 
@@ -117,28 +114,21 @@ public class MainScreenController implements Initializable {
             stage = (Stage) comboMain.getScene().getWindow();
 
             try {
-                //root = FXMLLoader.load(getClass().getResource("ClientUsage.fxml"));
-
-                //Load the Client Usage FXML.  Done in two steps so I can get 
-                //The FXML loader (theLoader) name in order to get getController()
-                //to me 
-                FXMLLoader theLoader = new FXMLLoader(getClass().getResource(clientUsage));
-                root = theLoader.load();
-
-                //Get the controller and pass the server name to function in ClientUsageController
-                //In order to poplate variable there.  
-                ClientUsageController usageController = theLoader.getController();
-                usageController.setServer(comboValueSelected);
-
-            } catch (IOException ex) {
-                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                select = Integer.parseInt(tfSelect.getText());
+            } catch (NumberFormatException nfe) {
+                System.out.println("NumberFormatException: " + nfe.getMessage());
             }
 
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            switch (select) {
+                case 1:
+                    sceneController.setScene(stage, QueryConsolidatorFXML.getClientUsageFXML());
+                    break;
 
-            stage.show();
-
+                   
+                default:
+                    System.out.println("Invalid");
+                    break;
+            }
         }
 
     }
@@ -153,7 +143,8 @@ public class MainScreenController implements Initializable {
     @FXML
     public void actionSelectedServer(ActionEvent event) {
 
-        comboValueSelected = (String) comboMain.getValue();
+        QueryConsolidatorFXML.setServer((String) comboMain.getValue());
+        //comboValueSelected = (String) comboMain.getValue();
 
     }
 

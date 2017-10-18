@@ -20,62 +20,35 @@ import javafx.stage.Stage;
  * @author Cush
  */
 public class ClientUsageController implements Initializable {
-    
+
     Stage stage; //Create a stage to use later, will be a reference to current stage.
-    Parent root;
-    public String server;
     
+    //Create instance of SceneController to user below
+    SceneController sceneController = new SceneController();
+    
+
     @FXML
     private Button clientUsageBackBtn;
-    
+
     /**
      * Initializes the controller class.
      */
-    
     @FXML
     private void clientUsageBack(ActionEvent event) {
         System.out.println("You clicked me!");
-        System.out.println(getServer());
-        
+        System.out.println(QueryConsolidatorFXML.getServer());
+
         //Get reference to the Stage the current scene is on (only 1 in this program)
-           stage = (Stage) clientUsageBackBtn.getScene().getWindow();
-            try {
-                //root = FXMLLoader.load(getClass().getResource("ClientUsage.fxml"));
-                
-                //Load the Client Usage FXML.  Done in two steps so I can get 
-                //The FXML loader (theLoader) name in order to get getController()
-                //me to 
-                FXMLLoader theLoader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
-                root = theLoader.load();
-                
-                
-            } catch (IOException ex) {
-                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        stage = (Stage) clientUsageBackBtn.getScene().getWindow();
         
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        //Call SceneController method to set the scene
+        sceneController.setScene(stage, QueryConsolidatorFXML.getMainFXML());
         
     }
-    
-    public void setServer(String serv) {
-        
-        server = serv;
-        
-    }
-    
-    public String getServer() {
-        
-        return server;
-        
-    }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
-    
-    
+
+    }
+
 }
