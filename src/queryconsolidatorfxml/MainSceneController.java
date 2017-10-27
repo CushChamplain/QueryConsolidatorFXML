@@ -11,18 +11,11 @@ package queryconsolidatorfxml;
  * https://stackoverflow.com/questions/14370183/passing-parameters-to-a-controller-when-loading-an-fxml
  * http://www.javafxtutorials.com/tutorials/switching-to-different-screens-in-javafx-and-fxml/
  */
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -32,11 +25,14 @@ import javafx.stage.Stage;
  *
  * @author Cush
  */
-public class MainScreenController implements Initializable {
+public class MainSceneController implements Initializable {
 
     Stage stage;
     Verify verify = new Verify(); //Create instance of verify class
     private final static int OPTIONS_BEGIN = 1, OPTIONS_END = 3;
+    
+    //Create instance of scene controller to load different scene.
+    SceneController sceneController = new SceneController();
 
     //Labels to populate if server not selected and user errors on option select
     @FXML
@@ -54,8 +50,7 @@ public class MainScreenController implements Initializable {
 
     int select;
 
-    //Create instance of scene controller to load different scene.
-    SceneController sceneController = new SceneController();
+    
 
     @FXML
     private void actionExitMain(ActionEvent event) {
@@ -113,6 +108,7 @@ public class MainScreenController implements Initializable {
             //in this program) by finding the stage comboMain is on
             stage = (Stage) comboMain.getScene().getWindow();
 
+            //Make selection an integer.
             try {
                 select = Integer.parseInt(tfSelect.getText());
             } catch (NumberFormatException nfe) {

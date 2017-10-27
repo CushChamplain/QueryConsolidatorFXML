@@ -7,11 +7,19 @@
  
 }
 
-#borderpanecss {
+#borderPaneMainCSS {
     -fx-background-color:  #cccccc;
     
     -fx-padding: 5 5 20 5;
     -fx-border-color: black;
+
+}
+
+#borderPaneClientUsageCSS {
+    -fx-background-color:  #cccccc;
+    
+    -fx-padding: 5 5 5 5;
+    
 
 }
 
@@ -34,5 +42,9 @@
 #textcss {
     -fx-background-color: #cccccc;
     
+}
+
+.text-area *.text {
+    -fx-text-alignment: center;
 }
 

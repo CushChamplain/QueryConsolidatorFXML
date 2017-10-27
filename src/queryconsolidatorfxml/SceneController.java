@@ -28,7 +28,7 @@ public class SceneController {
         
     }
     
-    Parent root;
+    Parent root; //Create a Parent node to use later
     
     public void setScene (Stage stage, String fxml) {
         
@@ -41,7 +41,7 @@ public class SceneController {
 
 
             } catch (IOException ex) {
-                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             Scene scene = new Scene(root);
