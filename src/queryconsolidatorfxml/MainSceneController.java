@@ -132,15 +132,16 @@ public class MainSceneController implements Initializable {
     public void loadCombo() {
 
         comboMain.getItems().clear();
-        comboMain.getItems().addAll("Server1", "Server2");
+        comboMain.getItems().addAll("APPSWPRAC", "APPSWPRAC2");
 
     }
 
     @FXML
     public void actionSelectedServer(ActionEvent event) {
 
+        //Set the global static variable to use on later scenes
         QueryConsolidatorFXML.setServer((String) comboMain.getValue());
-        //comboValueSelected = (String) comboMain.getValue();
+        
 
     }
 

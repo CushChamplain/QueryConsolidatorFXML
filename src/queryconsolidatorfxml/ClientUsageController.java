@@ -20,12 +20,14 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import static queryconsolidatorfxml.QueryConsolidatorFXML.getMainFXML;
 
 /**
  * FXML Controller class
@@ -37,7 +39,8 @@ public class ClientUsageController extends MainSceneController implements Initia
     //Stage stage; //Create a stage to use later, will be a reference to current stage.
     //Create instance of SceneController to user below
     //SceneController sceneController = new SceneController();
-    String url = "jdbc:sqlserver://localhost\\APPSWPRAC:1433;databaseName=QueryConsolidate";
+    String url = "jdbc:sqlserver://localhost\\" + QueryConsolidatorFXML.getServer()
+            + ":1433;databaseName=QueryConsolidate";
     String userName = "TestUser3";
     String password = "vermont21";
 
@@ -63,7 +66,7 @@ public class ClientUsageController extends MainSceneController implements Initia
         System.out.println("You clicked me!");
         System.out.println(QueryConsolidatorFXML.getServer());
 
-        //Get reference to the Stage the current scene is on (only 1 in this program)
+        //Get reference to the Stage the current scene is on
         //Note stage variable is inherited from MainSceneController class
         stage = (Stage) btnBackClientUsage.getScene().getWindow();
 
@@ -99,9 +102,19 @@ public class ClientUsageController extends MainSceneController implements Initia
 
         }
 
-        if (check) {
+        if (check) { //Validation checks are good
 
-            try (Connection con = DriverManager.getConnection(url, userName, password);
+            //Set the global variables
+            QueryConsolidatorFXML.setStartDT(tfStartDate.getText());
+            QueryConsolidatorFXML.setEndDT(tfEndDate.getText());
+            QueryConsolidatorFXML.setClientCode(tfClient.getText());
+
+            //Call SceneController instance method with 1 argument to lay on top
+            //of client usage screen (Not take the stage currently there).
+            //Note this instance is inherited from MainSceneController class.
+            sceneController.setScene(QueryConsolidatorFXML.getClientUsageTableFXML());
+
+            /*try (Connection con = DriverManager.getConnection(url, userName, password);
                     Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(getQuery(tfStartDate, tfEndDate, tfClient))) {
 
@@ -122,8 +135,6 @@ public class ClientUsageController extends MainSceneController implements Initia
             /*catch (ClassNotFoundException e) {
                 System.out.println("Class Not Found Exception :" + e.getMessage());
             }*/
-
-
         }
 
     }
@@ -143,8 +154,7 @@ public class ClientUsageController extends MainSceneController implements Initia
                     + "	   on (ul.userID = ui.userID)\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-            
+
         }
 
         return query;

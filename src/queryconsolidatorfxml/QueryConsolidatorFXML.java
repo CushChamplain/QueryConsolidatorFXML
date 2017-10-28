@@ -24,11 +24,16 @@ public class QueryConsolidatorFXML extends Application {
     //Setup global final variables for different screen fxml loads
     private static final String MAIN_SCREEN = "MainScreen.fxml";
     private static final String CLIENT_USAGE = "ClientUsage.fxml";
+    private static final String CLIENT_USAGE_TABLE = "ClientUsageTable.fxml";
     private static final String CLIENT_WEEKLY_INFO = "ClientWeelyInfo.fxml";
     private static final String USER_INFO = "UserInfo.fxml";
     
-    //Set a global variable for set and get functions
+    //Set a global variable for set and get functions used throughout program
     private static String server;
+    private static String startDT;
+    private static String endDT;
+    private static String client;
+    
     
     
 
@@ -77,6 +82,10 @@ public class QueryConsolidatorFXML extends Application {
 
     }
     
+    public static String getClientUsageTableFXML() {
+        return CLIENT_USAGE_TABLE;
+    }
+    
     public static void setServer (String serv) {
         
         server = serv;
@@ -88,5 +97,30 @@ public class QueryConsolidatorFXML extends Application {
         return server;
         
     }
+    
+    public static void setStartDT(String startDT) {
+        QueryConsolidatorFXML.startDT = startDT;
+    }
+
+    public static void setEndDT(String endDT) {
+        QueryConsolidatorFXML.endDT = endDT;
+    }
+
+    public static void setClientCode(String client) {
+        QueryConsolidatorFXML.client = client;
+    }
+    
+    public static String getStartDT() {
+        return startDT;
+    }
+
+    public static String getEndDT() {
+        return endDT;
+    }
+
+    public static String getClient() {
+        return client;
+    }
+    
 
 }
