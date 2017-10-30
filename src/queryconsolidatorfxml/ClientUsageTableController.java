@@ -31,18 +31,18 @@ import javafx.stage.Stage;
  */
 public class ClientUsageTableController implements Initializable {
 
-    //Create connection.  This is using the instance because the program is meant
-    //to work with multiple intances on the same server.  Gets instance from
-    //static variable set in main class
+    /*Create connection.  This is using the instance because the program is meant
+      to work with multiple intances on the same server.  Gets instance from
+      static variable set in main class*/
     String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
-               + ";databaseName=QueryConsolidate";
-    
+            + ";databaseName=QueryConsolidate";
+
     String userName = "TestUser3";
     String password = "vermont21";
 
     @FXML
     private Button btnCloseUsage;
-    
+
     //Create the interface ObservableList variable and set to class 
     private ObservableList<ClientUsageData> theData = FXCollections.observableArrayList();
 
@@ -59,25 +59,24 @@ public class ClientUsageTableController implements Initializable {
     private TableColumn<ClientUsageData, String> colLastName;
     @FXML
     private TableColumn<ClientUsageData, Timestamp> colLogin;
+
     @FXML
-    
-    
+
     private void actionCloseUsageTable(ActionEvent event) {
 
         //Get a reference to the stage from a button on the stage so it can be closed
         Stage stageUsageTable = (Stage) btnCloseUsage.getScene().getWindow();
         stageUsageTable.close(); //Close the stage
-        
 
     }
-    
+
     /**
-     * Initializes the controller class.  In this case it will execute on the
-     * no user input display of the data.
+     * Initializes the controller class. In this case it will execute on the no
+     * user input display of the data.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         System.out.println(theURL);
         setTheCells();
         //Use try-with-resource so it will close all after it leaves the try/catch block
@@ -93,49 +92,47 @@ public class ClientUsageTableController implements Initializable {
 
                 //Create instances of the ClientUsageData and add them to the 
                 //ObservableList
-                theData.add(new ClientUsageData(rs.getString("clientCode"), 
-                        rs.getString("userID"), rs.getString("firstName"), 
+                theData.add(new ClientUsageData(rs.getString("clientCode"),
+                        rs.getString("userID"), rs.getString("firstName"),
                         rs.getString("lastName"), rs.getTimestamp("loginTimestamp")));
                 /*System.out.print(rs.getString("clientCode") + " ");
                 System.out.print(rs.getString("userID") + " ");
                 System.out.print(rs.getString("firstName") + " ");
                 System.out.print(rs.getString("lastName") + " ");
                 System.out.println(rs.getTimestamp("loginTimestamp"));*/
-                
 
             }
-            
+
             System.out.println("Connected to database !");
 
         } catch (SQLException sqle) {
             System.out.println("Sql Exception :" + sqle.getMessage());
         }
-        
+
         //Set the items from ObservableList type ClientUsageData to table
-        tblClientUsage.setItems(theData); 
-        
+        tblClientUsage.setItems(theData);
+
         //Clear any global variables for the next run
         QueryConsolidatorFXML.setStartDT("");
         QueryConsolidatorFXML.setEndDT("");
         QueryConsolidatorFXML.setClientCode("");
-        
-        
+
     }
-    
+
     /**
-     * Method to link the cells for TableColumns with the variables in the 
+     * Method to link the cells for TableColumns with the variables in the
      * ClientUsageData class.
      */
     private void setTheCells() {
-     
+
         colClientCode.setCellValueFactory(new PropertyValueFactory<>("clientCode"));
         colUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
         colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         colLogin.setCellValueFactory(new PropertyValueFactory<>("loginTimestamp"));
-        
+
     }
-    
+
     private String getQuery(String start, String end, String client) {
         String query = "";
 
@@ -149,26 +146,20 @@ public class ClientUsageTableController implements Initializable {
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
 
-        }
-        
-        //User input only client code
+        } //User input only client code
         else if (start.isEmpty() && end.isEmpty() && !client.isEmpty()) {
-            
-            
 
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
                     + "	   on (ul.userID = ui.userID)\n"
-                    + "where ul.clientCode = '" +client + "'\n"
+                    + "where ul.clientCode = '" + client + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
 
-        }
-        
-        //User input end date and client
+        } //User input end date and client
         else if (start.isEmpty() && !end.isEmpty() && !client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -177,12 +168,10 @@ public class ClientUsageTableController implements Initializable {
                     + "     and ul.clientCode = '" + client + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }
-        
-        //User input only start date
+
+        } //User input only start date
         else if (!start.isEmpty() && end.isEmpty() && client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -190,12 +179,10 @@ public class ClientUsageTableController implements Initializable {
                     + "where ul.loginTimestamp >= '" + start + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }
-        
-        //User input start date and end date
+
+        } //User input start date and end date
         else if (!start.isEmpty() && !end.isEmpty() && client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -204,12 +191,10 @@ public class ClientUsageTableController implements Initializable {
                     + "    and ul.loginTimestamp < '" + end + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }
-        
-        //User input start, end, and client code
+
+        } //User input start, end, and client code
         else if (!start.isEmpty() && !end.isEmpty() && !client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -219,12 +204,10 @@ public class ClientUsageTableController implements Initializable {
                     + "    and ul.clientCode = '" + client + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }
-        
-        //User input start and client code
+
+        } //User input start and client code
         else if (!start.isEmpty() && end.isEmpty() && !client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -233,12 +216,10 @@ public class ClientUsageTableController implements Initializable {
                     + "    and ul.clientCode = '" + client + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }
-        
-        //User input just end date
+
+        } //User input just end date
         else if (start.isEmpty() && !end.isEmpty() && client.isEmpty()) {
-            
+
             query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
                     + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
@@ -246,9 +227,9 @@ public class ClientUsageTableController implements Initializable {
                     + "where ul.loginTimestamp < '" + end + "'\n"
                     + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
                     + "order by ul.loginTimestamp desc;";
-            
-        }   
-       
+
+        }
+
         return query;
     }
 
