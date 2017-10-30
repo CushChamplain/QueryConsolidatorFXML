@@ -18,8 +18,8 @@
       <GridPane prefHeight="44.0" prefWidth="469.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="174.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="179.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="121.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="174.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="126.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
@@ -27,12 +27,12 @@
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#actionExitMain" prefHeight="25.0" prefWidth="50.0" text="EXIT" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please Select a Server" wrappingWidth="156.701171875" GridPane.columnIndex="1">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please Select a Server" wrappingWidth="142.701171875" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <ComboBox id="comboboxcss" fx:id="comboMain" onAction="#actionSelectedServer" prefHeight="25.0" prefWidth="118.0" promptText="Server" GridPane.columnIndex="2" />
+            <ComboBox id="comboboxcss" fx:id="comboMain" onAction="#actionSelectedServer" prefHeight="25.0" prefWidth="121.0" promptText="Server" GridPane.columnIndex="2" />
             <Label fx:id="lblServer" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="11.0" />

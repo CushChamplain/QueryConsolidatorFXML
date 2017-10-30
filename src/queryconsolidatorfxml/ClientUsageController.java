@@ -36,13 +36,7 @@ import static queryconsolidatorfxml.QueryConsolidatorFXML.getMainFXML;
  */
 public class ClientUsageController extends MainSceneController implements Initializable {
 
-    //Stage stage; //Create a stage to use later, will be a reference to current stage.
-    //Create instance of SceneController to user below
-    //SceneController sceneController = new SceneController();
-    String url = "jdbc:sqlserver://localhost\\" + QueryConsolidatorFXML.getServer()
-            + ":1433;databaseName=QueryConsolidate";
-    String userName = "TestUser3";
-    String password = "vermont21";
+
 
     @FXML
     private Button btnBackClientUsage; //Used to get reference to stage and that's it.
@@ -114,51 +108,12 @@ public class ClientUsageController extends MainSceneController implements Initia
             //Note this instance is inherited from MainSceneController class.
             sceneController.setScene(QueryConsolidatorFXML.getClientUsageTableFXML());
 
-            /*try (Connection con = DriverManager.getConnection(url, userName, password);
-                    Statement stmt = con.createStatement();
-                        ResultSet rs = stmt.executeQuery(getQuery(tfStartDate, tfEndDate, tfClient))) {
-
-                while (rs.next()) {
-                    
-                    System.out.print(rs.getString("clientCode") + " ");
-                    System.out.print(rs.getString("userID") + " ");
-                    System.out.print(rs.getString("firstName") + " ");
-                    System.out.print(rs.getString("lastName") + " ");
-                    System.out.println(rs.getTimestamp("loginTimestamp"));
-                    
-                }
-                System.out.println("Connected to database !");
-
-            } catch (SQLException sqle) {
-                System.out.println("Sql Exception :" + sqle.getMessage());
-            }
-            /*catch (ClassNotFoundException e) {
-                System.out.println("Class Not Found Exception :" + e.getMessage());
-            }*/
+            
         }
 
     }
 
-    private String getQuery(TextField start, TextField end, TextField client) {
-        String query = "";
-        String startDT, endDT, clientSelected;
-        startDT = start.getText();
-        endDT = end.getText();
-        clientSelected = client.getText();
-
-        if (startDT.isEmpty() && endDT.isEmpty() && clientSelected.isEmpty()) {
-
-            query = "select ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
-                    + "from QueryConsolidate.dbo.USERMGMT_LOG ul \n"
-                    + "    inner join QueryConsolidate.dbo.USER_INFO ui\n"
-                    + "	   on (ul.userID = ui.userID)\n"
-                    + "group by ul.clientCode, ul.userID, ui.firstName, ui.lastName, ul.loginTimestamp\n"
-                    + "order by ul.loginTimestamp desc;";
-
-        }
-
-        return query;
-    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
