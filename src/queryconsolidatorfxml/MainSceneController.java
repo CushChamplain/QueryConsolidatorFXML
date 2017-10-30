@@ -142,7 +142,6 @@ public class MainSceneController implements Initializable {
         //Set the global static variable to use on later scenes
         QueryConsolidatorFXML.setServer((String) comboMain.getValue());
         
-
     }
 
     @Override

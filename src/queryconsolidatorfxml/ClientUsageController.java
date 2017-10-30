@@ -34,6 +34,7 @@ public class ClientUsageController extends MainSceneController implements Initia
     @FXML
     private Button btnBackClientUsage; //Used to get reference to stage and that's it.
 
+    //Declare the FXML fields
     @FXML
     Label lblSelect;
     @FXML
@@ -101,12 +102,9 @@ public class ClientUsageController extends MainSceneController implements Initia
             //Note this instance is inherited from MainSceneController class.
             sceneController.setScene(QueryConsolidatorFXML.getClientUsageTableFXML());
 
-            
         }
 
     }
-
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
