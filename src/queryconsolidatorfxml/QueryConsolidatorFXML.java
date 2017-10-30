@@ -33,10 +33,7 @@ public class QueryConsolidatorFXML extends Application {
     private static String startDT;
     private static String endDT;
     private static String client;
-    
-    
-    
-
+   
     @Override
     public void start(Stage stage) throws Exception {
 
