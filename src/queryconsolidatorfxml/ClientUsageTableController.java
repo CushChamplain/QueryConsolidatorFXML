@@ -1,9 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package queryconsolidatorfxml;
+
+/**
+ * @Course: SDEV 435 ~ Applied Software Practice I
+ * @Author Name: Cush
+ * @Assignment Name: queryconsolidatorfxml
+ * @Date: Oct 26, 2017
+ * @Description:  This class is used to create the table in another stage for
+ * the 1. Client usage option from the mainScreen.fxml.  NOTE:  For windows
+ * authentication the sqljdbc_auth.dll must be in the jdk<version>/bin folder. 
+ * The sqljdbc_auth.dll is found in the driver package from MS 
+ * (https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=11774).
+ * @Reference:
+ * https://querysurge.zendesk.com/hc/en-us/articles/205766836-Setup-for-SQL-Server-Windows-Authentication
+ */
+
 
 import java.net.URL;
 import java.sql.Connection;
@@ -30,16 +41,12 @@ import javafx.stage.Stage;
  * @author Cush
  */
 public class ClientUsageTableController implements Initializable {
-
-    /*Create connection.  This is using the instance because the program is meant
-      to work with multiple intances on the same server.  Gets instance from
-      static variable set in main class*/
+ 
+    //Create the url for the connection using windows authentication
     String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
-            + ";databaseName=QueryConsolidate";
-
-    String userName = "TestUser3";
-    String password = "vermont21";
-
+            + ";integratedSecurity=true;databaseName=QueryConsolidate";
+   
+    
     @FXML
     private Button btnCloseUsage;
 
@@ -77,11 +84,11 @@ public class ClientUsageTableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        System.out.println(theURL);
+        //System.out.println(theURL);
         setTheCells();
         //Use try-with-resource so it will close all after it leaves the try/catch block
-        try (Connection con = DriverManager.getConnection(theURL, userName, password);
-                Statement stmt = con.createStatement(); //creat the statement off connection
+        try (Connection con = DriverManager.getConnection(theURL);
+                Statement stmt = con.createStatement(); //create the statement off connection
                 //Get the results set by executing the statement with the appropriate
                 //Query.  The query is established by what the user inputs with
                 //the getQuery method.
