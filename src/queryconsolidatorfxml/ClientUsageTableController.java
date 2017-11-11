@@ -1,4 +1,3 @@
-
 package queryconsolidatorfxml;
 
 /**
@@ -6,16 +5,15 @@ package queryconsolidatorfxml;
  * @Author Name: Cush
  * @Assignment Name: queryconsolidatorfxml
  * @Date: Oct 26, 2017
- * @Description:  This class is used to create the table in another stage for
- * the 1. Client usage option from the mainScreen.fxml.  NOTE:  For windows
- * authentication the sqljdbc_auth.dll must be in the jdk<version>/bin folder. 
- * The sqljdbc_auth.dll is found in the driver package from MS 
+ * @Description: This class is used to create the table in another stage for the
+ * 1. Client usage option from the mainScreen.fxml. NOTE: For windows
+ * authentication the sqljdbc_auth.dll must be in the jdk<version>/bin folder.
+ * The sqljdbc_auth.dll is found in the driver package from MS
  * (https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=11774).
  * @Reference:
  * https://querysurge.zendesk.com/hc/en-us/articles/205766836-Setup-for-SQL-Server-Windows-Authentication
+ * https://docs.oracle.com/javafx/2/collections/jfxpub-collections.htm
  */
-
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,16 +39,16 @@ import javafx.stage.Stage;
  * @author Cush
  */
 public class ClientUsageTableController implements Initializable {
- 
+
     //Create the url for the connection using windows authentication
     String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
             + ";integratedSecurity=true;databaseName=QueryConsolidate";
-   
-    
+
     @FXML
     private Button btnCloseUsage;
 
-    //Create the interface ObservableList variable and set to class 
+    //Create the interface ObservableList (type ClientUsageData) variable and 
+    //set concrete implementation to FXCollections backed by ArrayList
     private ObservableList<ClientUsageData> theData = FXCollections.observableArrayList();
 
     //Declare the TableView and the TableColums variables
@@ -68,7 +66,6 @@ public class ClientUsageTableController implements Initializable {
     private TableColumn<ClientUsageData, Timestamp> colLogin;
 
     @FXML
-
     private void actionCloseUsageTable(ActionEvent event) {
 
         //Get a reference to the stage from a button on the stage so it can be closed
@@ -84,29 +81,25 @@ public class ClientUsageTableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //System.out.println(theURL);
-        setTheCells();
+        setTheCells(); 
+        
         //Use try-with-resource so it will close all after it leaves the try/catch block
         try (Connection con = DriverManager.getConnection(theURL);
                 Statement stmt = con.createStatement(); //create the statement off connection
+
                 //Get the results set by executing the statement with the appropriate
                 //Query.  The query is established by what the user inputs with
                 //the getQuery method.
                 ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getStartDT(),
                         QueryConsolidatorFXML.getEndDT(), QueryConsolidatorFXML.getClient()))) {
 
-            while (rs.next()) {
+            while (rs.next()) { //Loop through the ResultSet
 
                 //Create instances of the ClientUsageData and add them to the 
                 //ObservableList
                 theData.add(new ClientUsageData(rs.getString("clientCode"),
                         rs.getString("userID"), rs.getString("firstName"),
                         rs.getString("lastName"), rs.getTimestamp("loginTimestamp")));
-                /*System.out.print(rs.getString("clientCode") + " ");
-                System.out.print(rs.getString("userID") + " ");
-                System.out.print(rs.getString("firstName") + " ");
-                System.out.print(rs.getString("lastName") + " ");
-                System.out.println(rs.getTimestamp("loginTimestamp"));*/
 
             }
 
@@ -116,7 +109,7 @@ public class ClientUsageTableController implements Initializable {
             System.out.println("Sql Exception :" + sqle.getMessage());
         }
 
-        //Set the items from ObservableList type ClientUsageData to table
+        //Set the items from ObservableList to table
         tblClientUsage.setItems(theData);
 
         //Clear any global variables for the next run

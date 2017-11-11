@@ -56,6 +56,8 @@ public class MainSceneController implements Initializable {
     private void actionExitMain(ActionEvent event) {
         System.out.println("java version: " + System.getProperty("java.version"));
         System.out.println("javafx.version: " + System.getProperty("javafx.version"));
+        System.exit(0);
+        
     }
 
     @FXML
@@ -72,7 +74,7 @@ public class MainSceneController implements Initializable {
 
         }
 
-        //If server is selected check the selection is make
+        //If server is selected check that option selection is made
         if (check != false && !verify.isData(tfSelect)) {
 
             lblServer.setText("");
@@ -120,7 +122,9 @@ public class MainSceneController implements Initializable {
                     sceneController.setScene(stage, QueryConsolidatorFXML.getClientUsageFXML());
                     break;
 
-                   
+                case 2:
+                    sceneController.setScene(stage, QueryConsolidatorFXML.getWKInfoFXML());
+                    break;
                 default:
                     System.out.println("Invalid");
                     break;

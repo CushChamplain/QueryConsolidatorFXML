@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="412.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="queryconsolidatorfxml.WeeklyRunInfoTableController">
+   <children>
+      <TableView fx:id="tblWeeklyRunInfo" layoutX="9.0" layoutY="5.0" prefHeight="361.0" prefWidth="611.0">
+        <columns>
+          <TableColumn fx:id="colClientCode" prefWidth="75.0" text="ClientCode" />
+          <TableColumn fx:id="colClientName" prefWidth="167.0" text="ClientName" />
+            <TableColumn fx:id="colRunTimestamp" prefWidth="162.0" text="RunDate" />
+            <TableColumn fx:id="colWeek" prefWidth="101.0" text="RunWeek" />
+            <TableColumn fx:id="colStatus" prefWidth="105.0" text="Status" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnCloseWeekly" layoutX="569.0" layoutY="366.0" mnemonicParsing="false" onAction="#actionCloseWeeklyTable" text="CLOSE" />
+   </children>
+</AnchorPane>
