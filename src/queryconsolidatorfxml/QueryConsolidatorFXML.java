@@ -25,7 +25,8 @@ public class QueryConsolidatorFXML extends Application {
     private static final String MAIN_SCREEN = "MainScreen.fxml";
     private static final String CLIENT_USAGE = "ClientUsage.fxml";
     private static final String CLIENT_USAGE_TABLE = "ClientUsageTable.fxml";
-    private static final String CLIENT_WEEKLY_INFO = "ClientWeelyInfo.fxml";
+    private static final String CLIENT_WEEKLY= "WeeklyRunInfo.fxml";
+    private static final String CLIENT_WEEKLY_TABLE = "WeeklyRunInfoTable.fxml";
     private static final String USER_INFO = "UserInfo.fxml";
     
     //Set a global variable for set and get functions used throughout program
@@ -33,6 +34,7 @@ public class QueryConsolidatorFXML extends Application {
     private static String startDT;
     private static String endDT;
     private static String client;
+   
    
     @Override
     public void start(Stage stage) throws Exception {
@@ -69,7 +71,7 @@ public class QueryConsolidatorFXML extends Application {
     
     public static String getWKInfoFXML() {
 
-        return CLIENT_WEEKLY_INFO;
+        return CLIENT_WEEKLY;
 
     }
     
@@ -81,6 +83,12 @@ public class QueryConsolidatorFXML extends Application {
     
     public static String getClientUsageTableFXML() {
         return CLIENT_USAGE_TABLE;
+    }
+    
+    public static String getWeeklyRunInfoTableFXML() {
+        
+        return CLIENT_WEEKLY_TABLE;
+        
     }
     
     public static void setServer (String serv) {
