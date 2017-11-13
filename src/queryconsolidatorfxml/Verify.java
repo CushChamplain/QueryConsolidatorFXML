@@ -1,5 +1,10 @@
 package queryconsolidatorfxml;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -10,6 +15,7 @@ import javafx.scene.control.TextField;
  * @Date: Oct 5, 2017
  * @Subclass Verify Description:
  * @Reference:
+ * https://forums.asp.net/t/1945240.aspx?regular+expression+to+check+date+mm+dd+yyyy+which+allows+1+1+2013
  */
 //Imports
 //Begin Subclass Verify
@@ -21,6 +27,10 @@ public class Verify {
     public Verify() {
 
     }
+
+    //Create the url for the connection using windows authentication
+    String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
+            + ";integratedSecurity=true;databaseName=QueryConsolidate";
 
     public boolean isServer(ComboBox combo) {
 
@@ -91,13 +101,13 @@ public class Verify {
         String endDT = end.getText();
         System.out.println(startDT);
         System.out.println(endDT);
-        
+
         if (!startDT.isEmpty()) { //If the date is not empty (wildcard)
 
             if (!checkDate(startDT)) { //Check that format is correct
                 boolChecks = false;    //If not correct set to false for return
             }
-            
+
         }
 
         if (!endDT.isEmpty()) { //If the date is not empty (wildcard)
@@ -105,7 +115,7 @@ public class Verify {
             if (!checkDate(endDT)) { //Check that format is correct
                 boolChecks = false; //If not correct set to false for return
             }
-            
+
         }
 
         return boolChecks;
@@ -120,6 +130,35 @@ public class Verify {
 
             boolChecks = false;
         }
+        return boolChecks;
+
+    }
+
+    public boolean isClient(TextField client) {
+
+        boolean boolChecks = true;
+        String theClient = client.getText();
+
+        try (Connection con = DriverManager.getConnection(theURL);
+                Statement stmt = con.createStatement(); //create the statement off connection
+
+                //Get restuls.
+                ResultSet rs = stmt.executeQuery("select clientCode \n"
+                        + "from QueryConsolidate.dbo.org_info\n"
+                        + "where clientCode = '" + theClient + "'")) {
+
+            if (!rs.next()) { //If nothing in ResultSet
+
+                boolChecks = false;
+
+            }
+
+            System.out.println("Connected to database !");
+
+        } catch (SQLException sqle) {
+            System.out.println("Sql Exception :" + sqle.getMessage());
+        }
+
         return boolChecks;
 
     }

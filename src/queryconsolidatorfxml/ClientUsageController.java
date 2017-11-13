@@ -7,8 +7,6 @@ package queryconsolidatorfxml;
  * @Date: Oct 5, 2017
  * @Description:
  * @Reference:
- * https://forums.asp.net/t/1945240.aspx?regular+expression+to+check+date+mm+dd+yyyy+which+allows+1+1+2013
- * http://ruby.fgcu.edu/courses/mpenderg/gettingstartedwithnetbeans/SQLSERVERandNetbeans.html
  */
 //import java.sql.Connection;
 import java.net.URL;

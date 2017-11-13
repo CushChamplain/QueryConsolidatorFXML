@@ -87,6 +87,15 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
         }
 
+        //Check the client is a valid client
+        if (check && !verify.isClient(tfClientInRun)) {
+
+            lblSelInRun.setText("Invalid code");
+            tfClientInRun.requestFocus();
+            check = false;
+
+        }
+
         if (check) {
 
             //Use try-with-resource so it will close all after it leaves the try/catch block
@@ -98,12 +107,9 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
                             + "from QueryConsolidate.dbo.ORG_INFO\n"
                             + "where clientCode = '" + tfClientInRun.getText() + "'")) {
 
-                if (!rs.next()) { //If nothing in ResultSet
+                rs.next();
 
-                    lblSelInRun.setText("Invalid code");
-                    tfClientInRun.requestFocus();
-
-                } else if (rs.getInt("weeklyRun") == 1) {
+                if (rs.getInt("weeklyRun") == 1) {
 
                     lblSelInRun.setText("Yes");
                     tfClientInRun.requestFocus();
@@ -143,9 +149,21 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
         }
 
+        //Check the client is a valid client
+        if (check && !verify.isClient(tfClientRunHist)) {
+
+            lblSelRunHist.setText("Invalid code");
+            tfClientRunHist.requestFocus();
+            check = false;
+
+        }
+
         if (check) { //client code is entered
 
+            //Get focus for after display so user can see what they entered
+            //last and just start typing to enter a different code
             tfClientRunHist.requestFocus();
+            
             //Set the global client code variable
             QueryConsolidatorFXML.setClientCode(tfClientRunHist.getText());
 

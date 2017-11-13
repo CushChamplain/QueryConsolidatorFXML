@@ -13,6 +13,7 @@ package queryconsolidatorfxml;
  * @Reference:
  * https://querysurge.zendesk.com/hc/en-us/articles/205766836-Setup-for-SQL-Server-Windows-Authentication
  * https://docs.oracle.com/javafx/2/collections/jfxpub-collections.htm
+ * http://ruby.fgcu.edu/courses/mpenderg/gettingstartedwithnetbeans/SQLSERVERandNetbeans.html
  */
 import java.net.URL;
 import java.sql.Connection;

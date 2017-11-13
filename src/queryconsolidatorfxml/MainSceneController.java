@@ -125,6 +125,11 @@ public class MainSceneController implements Initializable {
                 case 2:
                     sceneController.setScene(stage, QueryConsolidatorFXML.getWKInfoFXML());
                     break;
+                /*work in progress, almost complete   
+                case 3:
+                    sceneController.setScene(stage, QueryConsolidatorFXML.getUserInfoFXML());
+                    break;*/
+                    
                 default:
                     System.out.println("Invalid");
                     break;
