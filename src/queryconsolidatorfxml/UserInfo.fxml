@@ -65,7 +65,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField maxWidth="50.0" />
+                  <TextField fx:id="tfActive" maxWidth="50.0" />
                   <Button mnemonicParsing="false" onAction="#actionSelectActive" prefHeight="25.0" prefWidth="50.0" text="Select" />
                   <Label fx:id="lblActive" prefHeight="17.0" prefWidth="75.0" />
                </children>
