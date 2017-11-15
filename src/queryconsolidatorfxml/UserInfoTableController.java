@@ -43,9 +43,6 @@ public class UserInfoTableController implements Initializable {
     //Create the url for the connection using windows authentication
     String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
             + ";integratedSecurity=true;databaseName=QueryConsolidate";
-    
-    String client = QueryConsolidatorFXML.getClient();
-    String status = QueryConsolidatorFXML.getUserStatus();
 
     @FXML
     private Button btnCloseUser;
@@ -92,7 +89,8 @@ public class UserInfoTableController implements Initializable {
                 //Get the results set by executing the statement with the appropriate
                 //Query.  The query is established by what the user inputs with
                 //the getQuery method.
-                ResultSet rs = stmt.executeQuery(getQuery(client, status))) {
+                ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getClient(), 
+                        QueryConsolidatorFXML.getUserStatus()))) {
 
             while (rs.next()) { //Loop through the ResultSet
 
@@ -115,6 +113,7 @@ public class UserInfoTableController implements Initializable {
 
         //Clear any global variables for the next run
         QueryConsolidatorFXML.setClientCode("");
+        QueryConsolidatorFXML.setUserStatus("");
 
     }
 
@@ -139,7 +138,7 @@ public class UserInfoTableController implements Initializable {
 
             query = "select userID, clientCode, firstName, lastName, userStatus\n"
                     + "from QueryConsolidate.dbo.USER_INFO \n"
-                    + "where userStatus = '" + userStatus + "\n"
+                    + "where userStatus = '" + userStatus + "'\n"
                     + "group by userID, clientCode, firstName, lastName, userStatus\n"
                     + "order by clientCode, lastName";
 
@@ -147,8 +146,8 @@ public class UserInfoTableController implements Initializable {
 
             query = "select userID, clientCode, firstName, lastName, userStatus\n"
                     + "from QueryConsolidate.dbo.USER_INFO \n"
-                    + "where userStatus = '" + userStatus + "and clientCode = '"
-                    + theClient + "\n"
+                    + "where userStatus = '" + userStatus + "' and clientCode = '"
+                    + theClient + "'\n"
                     + "group by userID, clientCode, firstName, lastName, userStatus\n"
                     + "order by clientCode, lastName";
 

@@ -73,6 +73,8 @@ public class UserInfoController extends MainSceneController implements Initializ
         lblInactive.setText("");
 
         tfInactive.clear(); //Clear TextField not relevant to action
+
+        //If they entered a client code, check that it's valid
         if (!tfActive.getText().isEmpty() && !verify.isClient(tfActive)) {
 
             lblActive.setText("Invalid code");
@@ -89,7 +91,7 @@ public class UserInfoController extends MainSceneController implements Initializ
 
             //Set the global client code variable
             QueryConsolidatorFXML.setClientCode(tfActive.getText());
-            
+
             //Set the gobal user status variable, will be used for queries
             QueryConsolidatorFXML.setUserStatus("active");
 
@@ -104,6 +106,42 @@ public class UserInfoController extends MainSceneController implements Initializ
 
     @FXML
     private void actionSelectInactive(ActionEvent event) {
+
+        boolean check = true;
+
+        //Clear the labels to reset
+        lblActive.setText("");
+        lblInactive.setText("");
+
+        tfActive.clear(); //Clear TextField not relevant to action
+
+        //If they entered a client code, check that it's valid
+        if (!tfInactive.getText().isEmpty() && !verify.isClient(tfInactive)) {
+
+            lblInactive.setText("Invalid code");
+            tfInactive.requestFocus();
+            check = false;
+
+        }
+
+        if (check) {
+
+            //Get focus for after display so user can see what they entered
+            //last and just start typing to enter a different code
+            tfInactive.requestFocus();
+
+            //Set the global client code variable
+            QueryConsolidatorFXML.setClientCode(tfInactive.getText());
+
+            //Set the gobal user status variable, will be used for queries
+            QueryConsolidatorFXML.setUserStatus("inactive");
+
+            //Call SceneController instance method with 1 argument to lay on top
+            //of weekly run info screen (Not take the stage currently there).
+            //Note this instance is inherited from MainSceneController class.
+            sceneController.setScene(QueryConsolidatorFXML.getUserInfoTableFXML());
+
+        }
 
     }
 
