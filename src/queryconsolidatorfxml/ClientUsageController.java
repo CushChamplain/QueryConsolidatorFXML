@@ -5,7 +5,9 @@ package queryconsolidatorfxml;
  * @Author Name: Cush
  * @Assignment Name: queryconsolidatorfxml
  * @Date: Oct 5, 2017
- * @Description:
+ * @Description: This class is the controller for the ClientUsage.fxml of the
+ * U/I The client usage is the scene that appears when selecting option 1 from
+ * the main scene.
  * @Reference:
  */
 //import java.sql.Connection;
@@ -21,20 +23,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ * FXML Controller class extends MainSceneController
  *
  * @author Cush
  */
 public class ClientUsageController extends MainSceneController implements Initializable {
 
-
-
     @FXML
     private Button btnBackClientUsage; //Used to get reference to stage and that's it.
 
-    //Declare the FXML fields
     @FXML
-    Label lblSelect;
+    Label lblSelect; //Label to populate if verify fails
+
+    //TextFields
     @FXML
     private TextField tfStartDate;
     @FXML
@@ -45,23 +46,24 @@ public class ClientUsageController extends MainSceneController implements Initia
     private TextArea taNote;
 
     /**
-     * Initializes the controller class.
+     * actionBackClientUsage method: ActionEvent by user to go back to main
      */
     @FXML
     private void actionBackClientUsage(ActionEvent event) {
-        System.out.println("You clicked me!");
-        System.out.println(QueryConsolidatorFXML.getServer());
 
-        //Get reference to the Stage the current scene is on
-        //Note stage variable is inherited from MainSceneController class
+        /*Get reference to the Stage the current scene is on
+          Note stage variable is inherited from MainSceneController class*/
         stage = (Stage) btnBackClientUsage.getScene().getWindow();
 
-        //Call SceneController instance method to swap scenes.  
-        //Note this instance is inherited from MainSceneController class.
+        /*Call SceneController instance method to swap scenes.  
+          Note this instance is inherited from MainSceneController class*/
         sceneController.setScene(stage, QueryConsolidatorFXML.getMainFXML());
 
     }
 
+    /**
+     * actionExitClientUsage method: ActionEvent by user to exit program
+     */
     @FXML
     private void actionExitClientUsage(ActionEvent event) {
 
@@ -69,14 +71,18 @@ public class ClientUsageController extends MainSceneController implements Initia
 
     }
 
+    /**
+     * actionSelectClientUsage method: ActionEvent by user selecting to pull
+     * data from database based on fields entered (or not entered)
+     */
     @FXML
     private void actionSelectClientUsage(ActionEvent event) {
 
-        boolean check = true;
+        boolean check = true; //boolean to use throughout method to verify
 
-        lblSelect.setText("");
+        lblSelect.setText(""); 
 
-        //Program allows none entry of dates (wildcards).  If they enter
+        //Program allows no entry of dates (wildcards).  If they enter
         //a date in either the start or end, check they are valid formats.
         if (!verify.isDate(tfStartDate, tfEndDate)) {
 
@@ -88,22 +94,26 @@ public class ClientUsageController extends MainSceneController implements Initia
 
         }
 
-        if (check) { //Validation checks are good
+        if (check) { //Verify checks are good
 
             //Set the global variables
             QueryConsolidatorFXML.setStartDT(tfStartDate.getText());
             QueryConsolidatorFXML.setEndDT(tfEndDate.getText());
             QueryConsolidatorFXML.setClientCode(tfClient.getText());
 
-            //Call SceneController instance method with 1 argument to lay on top
-            //of client usage screen (Not take the stage currently there).
-            //Note this instance is inherited from MainSceneController class.
+            /*Call SceneController instance method with 1 argument to lay on top
+              of client usage scene on a new stage (Not replace scene onto stage 
+              currently there).  Note this instance is inherited from 
+              MainSceneController class*/
             sceneController.setScene(QueryConsolidatorFXML.getClientUsageTableFXML());
 
         }
 
     }
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

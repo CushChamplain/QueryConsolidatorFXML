@@ -5,12 +5,17 @@ package queryconsolidatorfxml;
  * @Author Name: Cush
  * @Assignment Name: queryconsolidatorfxml
  * @Date: Oct 5, 2017
- * @Description:
+ * @Description: This class is the controller for the MainScene.fxml of the U/I
+ * The main scene is the first scene that appears. It also holds a Stage,
+ * Verify, and SceneController that will be used in subsequent scenes by
+ * extending other classes from this class. This is done in order to switch the
+ * scenes rather than lay a scene on top of another after user input.
  * @Reference:
  * https://stackoverflow.com/questions/19065464/how-to-populate-a-list-values-to-a-combobox-in-javafx
  * https://stackoverflow.com/questions/14370183/passing-parameters-to-a-controller-when-loading-an-fxml
  * http://www.javafxtutorials.com/tutorials/switching-to-different-screens-in-javafx-and-fxml/
  */
+//imports
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,59 +27,65 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
+ * FXML Controller class
+ * Begin class MainSceneController
  *
  * @author Cush
  */
 public class MainSceneController implements Initializable {
 
+    /*Stage variable, Veryify & SceneController instanced used in this class
+     And extended classes*/
     Stage stage;
-    Verify verify = new Verify(); //Create instance of verify class
-    private final static int OPTIONS_BEGIN = 1, OPTIONS_END = 3;
-    
-    //Create instance of scene controller to load different scene.
+    Verify verify = new Verify();
     SceneController sceneController = new SceneController();
 
-    //Labels to populate if server not selected and user errors on option select
+    //User options parameter
+    private final static int OPTIONS_BEGIN = 1, OPTIONS_END = 3;
+
+    //Labels to populate if server not selected and/or user errors on option select
     @FXML
     private Label lblServer;
     @FXML
     private Label lblSelect;
 
     @FXML
-    private TextField tfSelect;
+    private TextField tfSelect; //Texfield for options selection
 
     @FXML
-    private ComboBox comboMain;
+    private ComboBox comboMain; //ComboBox for server optoins
 
-    public String comboValueSelected;
+    public String comboValueSelected; //String to hold server selected from ComboBox
 
-    int select;
+    int select; //Used in the switch/case below
 
-    
-
+    /**
+     * actionExitMain method: ActionEvent by user to exit program
+     */
     @FXML
     private void actionExitMain(ActionEvent event) {
-        System.out.println("java version: " + System.getProperty("java.version"));
-        System.out.println("javafx.version: " + System.getProperty("javafx.version"));
+ 
         System.exit(0);
         
     }
 
+    /**
+     * actionSelectMain method: ActionEvent by user when selecting option
+     */
     @FXML
     private void actionSelectMain(ActionEvent event) {
 
-        boolean check = true;
+        boolean check = true; //boolean to use throughout method to verify
 
         //Make sure they selected a server
         if (!verify.isServer(comboMain)) {
 
             lblServer.setText("Please Select Server");
-
             check = false;
 
         }
 
-        //If server is selected check that option selection is made
+        //Check option selection is made
         if (check != false && !verify.isData(tfSelect)) {
 
             lblServer.setText("");
@@ -84,7 +95,7 @@ public class MainSceneController implements Initializable {
 
         }
 
-        //If server selected and data, check that it's an integer
+        //Check option selection is an integer
         if (check != false && !verify.isInt(tfSelect)) {
 
             lblServer.setText("");
@@ -94,7 +105,7 @@ public class MainSceneController implements Initializable {
 
         }
 
-        //Check if server selected, data, and is int, check selection is in range
+        //check optin selection is in range
         if (check != false && !verify.isRange(tfSelect, OPTIONS_BEGIN, OPTIONS_END)) {
 
             lblServer.setText("");
@@ -104,10 +115,10 @@ public class MainSceneController implements Initializable {
 
         }
 
-        if (check) {
+        if (check) { //All entries verified
 
-            //Get reference to the Stage the current scene is on (only 1 
-            //in this program) by finding the stage comboMain is on
+            /*Get reference to the Stage the current scene is on 
+              by finding the stage comboMain is on*/
             stage = (Stage) comboMain.getScene().getWindow();
 
             //Make selection an integer.
@@ -117,6 +128,8 @@ public class MainSceneController implements Initializable {
                 System.out.println("NumberFormatException: " + nfe.getMessage());
             }
 
+            /*Switch based on selection from user.  Use SceneController class
+              to pass the reference to the stage and the scene to load*/
             switch (select) {
                 case 1:
                     sceneController.setScene(stage, QueryConsolidatorFXML.getClientUsageFXML());
@@ -125,11 +138,11 @@ public class MainSceneController implements Initializable {
                 case 2:
                     sceneController.setScene(stage, QueryConsolidatorFXML.getWKInfoFXML());
                     break;
-                  
+
                 case 3:
                     sceneController.setScene(stage, QueryConsolidatorFXML.getUserInfoFXML());
                     break;
-                    
+
                 default:
                     System.out.println("Invalid");
                     break;
@@ -138,6 +151,9 @@ public class MainSceneController implements Initializable {
 
     }
 
+    /**
+     * loadCombo method: Load the ComboBox with servers
+     */
     public void loadCombo() {
 
         comboMain.getItems().clear();
@@ -145,17 +161,23 @@ public class MainSceneController implements Initializable {
 
     }
 
+    /**
+     * actionSelectServer method: ActionEvent by user when selecting server
+     */
     @FXML
     public void actionSelectedServer(ActionEvent event) {
 
         //Set the global static variable to use on later scenes
         QueryConsolidatorFXML.setServer((String) comboMain.getValue());
-        
+
     }
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadCombo(); //Call function to load the ComboBox
     }
 
-}
+} //End class MainSceneController

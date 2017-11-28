@@ -1,5 +1,6 @@
 package queryconsolidatorfxml;
 
+//Imports
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,11 +14,12 @@ import javafx.scene.control.TextField;
  * @Author Name: Cush
  * @Assignment Name: queryconsolidatorfxml
  * @Date: Oct 5, 2017
- * @Subclass Verify Description:
+ * @Subclass Verify Description: This class is used to verify the user input
+ * is entered, correct, valid, and in the right format
  * @Reference:
  * https://forums.asp.net/t/1945240.aspx?regular+expression+to+check+date+mm+dd+yyyy+which+allows+1+1+2013
  */
-//Imports
+
 //Begin Subclass Verify
 public class Verify {
 
@@ -32,18 +34,30 @@ public class Verify {
     String theURL = "jdbc:sqlserver://localhost;instanceName=" + QueryConsolidatorFXML.getServer()
             + ";integratedSecurity=true;databaseName=QueryConsolidate";
 
+    /**
+     * isServer method: Check that server is selected
+     * @param combo
+     * @return boolChecks
+     */
     public boolean isServer(ComboBox combo) {
 
         boolean boolChecks = true;
+        
         if (combo.getSelectionModel().isEmpty()) {
 
             boolChecks = false;
+            
         }
 
         return boolChecks;
 
     }
 
+    /**
+     * isInt method: Check the entry is an integer
+     * @param tf
+     * @return boolChecks
+     */
     public boolean isInt(TextField tf) {
         boolean boolChecks = true;
 
@@ -59,6 +73,11 @@ public class Verify {
 
     }
 
+    /**
+     * isData method: Check if field is blank
+     * @param tf
+     * @return boolChecks
+     */
     public boolean isData(TextField tf) {
 
         boolean boolChecks = true;
@@ -73,10 +92,18 @@ public class Verify {
 
     }
 
+    /**
+     * isRange method: Check user input is within range
+     * @param tf
+     * @param begin
+     * @param end
+     * @return boolChecks
+     */
     public boolean isRange(TextField tf, int begin, int end) {
 
         boolean boolChecks = true;
 
+        //Parse the Textfield to get integer then check if in range
         try {
             int i = Integer.parseInt(tf.getText());
 
@@ -94,6 +121,13 @@ public class Verify {
         return boolChecks;
     }
 
+    /**
+     * isDate method: Helper method check if date is empty, if not call
+     * checkDate method
+     * @param start
+     * @param end
+     * @return boolChecks
+     */
     public boolean isDate(TextField start, TextField end) {
 
         boolean boolChecks = true;
@@ -122,6 +156,11 @@ public class Verify {
 
     }
 
+    /**
+     * checkDate method: Use regex to check date format
+     * @param date
+     * @return boolChecks
+     */
     public boolean checkDate(String date) {
         boolean boolChecks = true;
 
@@ -134,11 +173,18 @@ public class Verify {
 
     }
 
+    /**
+     * isClient method: Check client entered by user is valid.  Connects to 
+     * database 
+     * @param client
+     * @return boolChecks
+     */
     public boolean isClient(TextField client) {
 
         boolean boolChecks = true;
         String theClient = client.getText();
 
+        //Try with resource to close connection after check
         try (Connection con = DriverManager.getConnection(theURL);
                 Statement stmt = con.createStatement(); //create the statement off connection
 
@@ -152,8 +198,6 @@ public class Verify {
                 boolChecks = false;
 
             }
-
-            System.out.println("Connected to database !");
 
         } catch (SQLException sqle) {
             System.out.println("Sql Exception :" + sqle.getMessage());
