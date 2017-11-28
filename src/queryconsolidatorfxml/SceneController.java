@@ -1,5 +1,6 @@
 package queryconsolidatorfxml;
 
+//imports
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,9 +14,10 @@ import javafx.stage.Stage;
  * @Author Name: Cush
  * @Assignment Name: queryconsolidatorfxml
  * @Date: Oct 14, 2017
- * @Subclass SceneController Description:
+ * @Subclass SceneController Description: class used to to load a new scene
+ * on top of the stage or create a new stage and load the scene on there
  */
-//Imports
+
 //Begin Subclass SceneController
 public class SceneController {
 
@@ -39,18 +41,18 @@ public class SceneController {
     public void setScene(Stage stage, String fxml) {
 
         try {
-            //Load the FXML
+            //Create the FXMLLoader
             FXMLLoader theLoader = new FXMLLoader(getClass().getResource(fxml));
-            root = theLoader.load();
+            
+            root = theLoader.load();  //Call load method and assign to root
 
         } catch (IOException ex) {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-
-        stage.show();
+        Scene scene = new Scene(root); //Create the Scene and add FXML to it
+        stage.setScene(scene); //Set the scene to the reference to stage passed
+        stage.show(); //Show the scene
 
     }
 
@@ -64,17 +66,17 @@ public class SceneController {
 
         Stage newStage = new Stage();
         try {
-            //Load the FXML
+            //Create the FXMLLoader
             FXMLLoader theLoader = new FXMLLoader(getClass().getResource(fxml));
-            root = theLoader.load();
+            
+            root = theLoader.load(); //Call load method to assign to root
 
         } catch (IOException ex) {
             Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root); //Create the Scene and add FXML to it
         newStage.setScene(scene); //This is where it differs from 2 arg method (newStage)
-
         newStage.show(); //This is where it differs from 2 arg method (newStage)
 
     }
