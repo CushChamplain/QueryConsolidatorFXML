@@ -34,8 +34,9 @@ import javafx.stage.Stage;
  */
 public class MainSceneController implements Initializable {
 
-    /*Stage variable, Veryify & SceneController instanced used in this class
-     And extended classes*/
+    /*Stage variable, Verify & SceneController instanced used in this class
+     And extended classes
+    */
     Stage stage;
     Verify verify = new Verify();
     SceneController sceneController = new SceneController();
@@ -118,7 +119,8 @@ public class MainSceneController implements Initializable {
         if (check) { //All entries verified
 
             /*Get reference to the Stage the current scene is on 
-              by finding the stage comboMain is on*/
+              by finding the stage comboMain is on
+            */
             stage = (Stage) comboMain.getScene().getWindow();
 
             //Make selection an integer.
@@ -129,7 +131,8 @@ public class MainSceneController implements Initializable {
             }
 
             /*Switch based on selection from user.  Use SceneController class
-              to pass the reference to the stage and the scene to load*/
+              to pass the reference to the stage and the scene to load
+            */
             switch (select) {
                 case 1:
                     sceneController.setScene(stage, QueryConsolidatorFXML.getClientUsageFXML());

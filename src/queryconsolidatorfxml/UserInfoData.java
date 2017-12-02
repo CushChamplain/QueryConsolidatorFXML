@@ -10,16 +10,25 @@ package queryconsolidatorfxml;
  * Reference:
  * https://www.youtube.com/watch?v=3tmz-0g3EPs
  */
-//Imports
+
 //Begin Subclass UserInfoData
 public class UserInfoData {
 
+    //Declare variables
     private String userID;
     private String clientCode;
     private String firstName;
     private String lastName;
     private String userStatus;
 
+    /**
+     * Constructor with parameters
+     * @param userID
+     * @param clientCode
+     * @param firstName
+     * @param lastName
+     * @param userStatus
+     */
     public UserInfoData(String userID, String clientCode, String firstName, 
             String lastName, String userStatus) {
         this.userID = userID;

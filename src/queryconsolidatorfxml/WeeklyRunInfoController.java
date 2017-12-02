@@ -1,5 +1,17 @@
 package queryconsolidatorfxml;
 
+/**
+ * @Course: SDEV 435 ~ Applied Software Practice I
+ * @Author Name: Cush
+ * @Assignment Name: queryconsolidatorfxml
+ * @Date: Oct 10, 2017
+ * @Description: This class is the controller for the WeeklyRunInfo.fxml of the
+ * U/I The user info is the scene that appears when selecting option 2 from the
+ * main scene. This class extends MainSceneController class in order to use a
+ * Stage variable, Verify & SceneController instances.
+ * @Reference:
+ */
+//Imports
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ * FXML Controller class extends MainSceneController
  *
  * @author Cush
  */
@@ -43,23 +55,24 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
     private TextArea taNote;
 
     /**
-     * Initializes the controller class.
+     * actionBackWeeklyInfo method: ActionEvent by user to go back to main
      */
     @FXML
     private void actionBackWeeklyInfo(ActionEvent event) {
-        System.out.println("You clicked me!");
-        System.out.println(QueryConsolidatorFXML.getServer());
 
-        //Get reference to the Stage the current scene is on
-        //Note stage variable is inherited from MainSceneController class
+        /*Get reference to the Stage the current scene is on
+          Note stage variable is inherited from MainSceneController class*/
         stage = (Stage) btnBackWeeklyInfo.getScene().getWindow();
 
-        //Call SceneController instance method to swap scenes.  
-        //Note this instance is inherited from MainSceneController class.
+        /*Call SceneController instance method to swap scenes.  
+          Note this instance is inherited from MainSceneController class.*/
         sceneController.setScene(stage, QueryConsolidatorFXML.getMainFXML());
 
     }
 
+    /**
+     * actionExitWeeklyInfo method: ActionEvent by user to exit program
+     */
     @FXML
     private void actionExitWeeklyInfo(ActionEvent event) {
 
@@ -67,6 +80,10 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
     }
 
+    /**
+     * actionSelectInRun method: ActionEvent by user selecting to pull data from
+     * database based on fields entered
+     */
     @FXML
     private void actionSelectInRun(ActionEvent event) {
 
@@ -96,7 +113,7 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
         }
 
-        if (check) {
+        if (check) { //If no user input issues
 
             //Use try-with-resource so it will close all after it leaves the try/catch block
             try (Connection con = DriverManager.getConnection(theURL);
@@ -107,19 +124,20 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
                             + "from QueryConsolidate.dbo.ORG_INFO\n"
                             + "where clientCode = '" + tfClientInRun.getText() + "'")) {
 
-                rs.next();
+                rs.next(); //Move to the first item in results
 
+                /*If the weeklyRun column is a 1 (data structure considers in run)
+                  they are in the run
+                 */
                 if (rs.getInt("weeklyRun") == 1) {
 
                     lblSelInRun.setText("Yes");
-                    tfClientInRun.requestFocus();
+                    tfClientInRun.requestFocus(); //get focus back for next entry
 
-                } else {
+                } else { //weeklyRun column not a 1 indicating not in run
                     lblSelInRun.setText("No");
-                    tfClientInRun.requestFocus();
+                    tfClientInRun.requestFocus(); //get focus back for next entry
                 }
-
-                System.out.println("Connected to database !");
 
             } catch (SQLException sqle) {
                 System.out.println("Sql Exception :" + sqle.getMessage());
@@ -129,6 +147,10 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
     }
 
+    /**
+     * actionSelectRunHist method: ActionEvent by user selecting to pull data
+     * from database based on fields entered
+     */
     @FXML
     private void actionSelectRunHist(ActionEvent event) {
 
@@ -158,18 +180,20 @@ public class WeeklyRunInfoController extends MainSceneController implements Init
 
         }
 
-        if (check) { //client code is entered
+        if (check) { //client code is entered and valid
 
-            //Get focus for after display so user can see what they entered
-            //last and just start typing to enter a different code
+            /*Get focus for after display so user can see what they entered
+              last and just start typing to enter a different code
+            */
             tfClientRunHist.requestFocus();
-            
+
             //Set the global client code variable
             QueryConsolidatorFXML.setClientCode(tfClientRunHist.getText());
 
-            //Call SceneController instance method with 1 argument to lay on top
-            //of weekly run info screen (Not take the stage currently there).
-            //Note this instance is inherited from MainSceneController class.
+            /*Call SceneController instance method with 1 argument to lay on top
+              of weekly run info screen (Not take the stage currently there).
+              Note this instance is inherited from MainSceneController class.
+            */
             sceneController.setScene(QueryConsolidatorFXML.getWeeklyRunInfoTableFXML());
 
         }

@@ -133,8 +133,6 @@ public class Verify {
         boolean boolChecks = true;
         String startDT = start.getText();
         String endDT = end.getText();
-        System.out.println(startDT);
-        System.out.println(endDT);
 
         if (!startDT.isEmpty()) { //If the date is not empty (wildcard)
 

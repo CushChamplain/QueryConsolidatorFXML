@@ -1,5 +1,6 @@
 package queryconsolidatorfxml;
 
+//Imports
 import java.sql.Timestamp;
 
 /** 
@@ -16,12 +17,21 @@ import java.sql.Timestamp;
 //Begin Subclass WeeklyRunInfoData
 public class WeeklyRunInfoData {
     
+    //Declare variables
     private String clientCode;
     private String clientName;
     private Timestamp runTimestamp;
     private String theWeek;
     private String theStatus;
 
+    /**
+     * Constructor with parameters
+     * @param clientCode
+     * @param clientName
+     * @param runTimestamp
+     * @param theWeek
+     * @param theStatus
+     */
     public WeeklyRunInfoData(String clientCode, String clientName, 
             Timestamp runTimestamp, String theWeek, String theStatus) {
         this.clientCode = clientCode;

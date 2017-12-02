@@ -15,6 +15,7 @@ package queryconsolidatorfxml;
  * https://docs.oracle.com/javafx/2/collections/jfxpub-collections.htm
  * http://ruby.fgcu.edu/courses/mpenderg/gettingstartedwithnetbeans/SQLSERVERandNetbeans.html
  */
+//imports
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,8 +48,9 @@ public class UserInfoTableController implements Initializable {
     @FXML
     private Button btnCloseUser;
 
-    //Create the interface ObservableList (type WeeklyRunInfoData) variable and 
-    //set concrete implementation to FXCollections backed by ArrayList
+    /*Create the interface ObservableList (type UserInfoData) variable and 
+      set concrete implementation to FXCollections backed by ArrayList
+    */
     private ObservableList<UserInfoData> theData = FXCollections.observableArrayList();
 
     //Declare the TableView and the TableColums variables
@@ -75,34 +77,35 @@ public class UserInfoTableController implements Initializable {
     }
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class. In this case it will execute on the no
+     * user input display of the data.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        setTheCells();
+        setTheCells(); //Call method
 
         //Use try-with-resource so it will close all after it leaves the try/catch block
         try (Connection con = DriverManager.getConnection(theURL);
                 Statement stmt = con.createStatement(); //create the statement off connection
 
-                //Get the results set by executing the statement with the appropriate
-                //Query.  The query is established by what the user inputs with
-                //the getQuery method.
-                ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getClient(), 
+                /*Get the results set by executing the statement with the appropriate
+                  Query.  The query is established by what the user inputs with
+                  the getQuery method
+                */
+                ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getClient(),
                         QueryConsolidatorFXML.getUserStatus()))) {
 
             while (rs.next()) { //Loop through the ResultSet
 
-                //Create instances of the WeeklyRunInfoData and add them to the 
-                //ObservableList
+                /*Create instances of the UserInfoData and add them to the 
+                  ObservableList
+                */
                 theData.add(new UserInfoData(rs.getString("userID"),
                         rs.getString("clientCode"), rs.getString("firstName"),
                         rs.getString("lastName"), rs.getString("userStatus")));
 
             }
-
-            System.out.println("Connected to database !");
 
         } catch (SQLException sqle) {
             System.out.println("Sql Exception :" + sqle.getMessage());
@@ -118,8 +121,8 @@ public class UserInfoTableController implements Initializable {
     }
 
     /**
-     * Method to link the cells for TableColumns with the variables in the
-     * UserInfoData class.
+     * setTheCells method: to link the cells for TableColumns with the variables
+     * in the ClientUsageData class.
      */
     private void setTheCells() {
 
@@ -131,6 +134,12 @@ public class UserInfoTableController implements Initializable {
 
     }
 
+    /**
+     * getQuery method: For getting the appropriate query based on fields user
+     * entered or did not enter
+     *
+     * @return query
+     */
     private String getQuery(String theClient, String userStatus) {
         String query = "";
 
@@ -152,9 +161,9 @@ public class UserInfoTableController implements Initializable {
                     + "order by clientCode, lastName";
 
         }
-        
+
         return query;
 
     }
 
-}
+} //End UserInfoTableController class

@@ -1,4 +1,3 @@
-
 package queryconsolidatorfxml;
 
 /**
@@ -16,7 +15,6 @@ package queryconsolidatorfxml;
  * https://docs.oracle.com/javafx/2/collections/jfxpub-collections.htm
  * http://ruby.fgcu.edu/courses/mpenderg/gettingstartedwithnetbeans/SQLSERVERandNetbeans.html
  */
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,8 +48,9 @@ public class WeeklyRunInfoTableController implements Initializable {
     @FXML
     private Button btnCloseWeekly;
 
-    //Create the interface ObservableList (type WeeklyRunInfoData) variable and 
-    //set concrete implementation to FXCollections backed by ArrayList
+    /*Create the interface ObservableList (type WeeklyRunInfoData) variable and 
+      set concrete implementation to FXCollections backed by ArrayList
+    */
     private ObservableList<WeeklyRunInfoData> theData = FXCollections.observableArrayList();
 
     //Declare the TableView and the TableColums variables
@@ -83,30 +82,29 @@ public class WeeklyRunInfoTableController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
-        setTheCells();
-        
+
+        setTheCells(); // Call method
+
         //Use try-with-resource so it will close all after it leaves the try/catch block
         try (Connection con = DriverManager.getConnection(theURL);
                 Statement stmt = con.createStatement(); //create the statement off connection
 
-                //Get the results set by executing the statement with the appropriate
-                //Query.  The query is established by what the user inputs with
-                //the getQuery method.
+                /*Get the results set by executing the statement with the appropriate
+                  Query.  The query is established by what the user inputs with
+                  the getQuery method
+                */
                 ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getClient()))) {
 
             while (rs.next()) { //Loop through the ResultSet
 
-                //Create instances of the WeeklyRunInfoData and add them to the 
-                //ObservableList
+                /*Create instances of the WeeklyRunInfoData and add them to the 
+                  ObservableList
+                */
                 theData.add(new WeeklyRunInfoData(rs.getString("clientCode"),
                         rs.getString("clientName"), rs.getTimestamp("runTimestamp"),
                         rs.getString("theWeek"), rs.getString("theStatus")));
 
             }
-
-            System.out.println("Connected to database !");
 
         } catch (SQLException sqle) {
             System.out.println("Sql Exception :" + sqle.getMessage());
@@ -120,8 +118,8 @@ public class WeeklyRunInfoTableController implements Initializable {
     }
 
     /**
-     * Method to link the cells for TableColumns with the variables in the
-     * WeeklyRunInfoData class.
+     * setTheCells method: to link the cells for TableColumns with the variables
+     * in the WeeklyRunInfoData class.
      */
     private void setTheCells() {
 
@@ -133,6 +131,11 @@ public class WeeklyRunInfoTableController implements Initializable {
 
     }
 
+    /**
+     * getQuery method: For getting the appropriate query based user input
+     *
+     * @return query
+     */
     private String getQuery(String client) {
         String query = "";
 
@@ -143,8 +146,8 @@ public class WeeklyRunInfoTableController implements Initializable {
                 + "where ae.clientCode = '" + client + "'\n"
                 + "group by ae.clientCode, oi.clientName, ae.runTimestamp, ae.theWeek, ae.theStatus\n"
                 + "order by ae.runTimestamp desc";
-        
+
         return query;
     }
 
-}
+} //End WeeklyRunInfoController method
