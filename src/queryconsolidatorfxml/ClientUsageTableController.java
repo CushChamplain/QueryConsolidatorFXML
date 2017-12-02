@@ -48,8 +48,8 @@ public class ClientUsageTableController implements Initializable {
     @FXML
     private Button btnCloseUsage;
 
-    //Create the interface ObservableList (type ClientUsageData) variable and 
-    //set concrete implementation to FXCollections backed by ArrayList
+    /*Create the interface ObservableList (type ClientUsageData) variable and 
+      set concrete implementation to FXCollections backed by ArrayList*/
     private ObservableList<ClientUsageData> theData = FXCollections.observableArrayList();
 
     //Declare the TableView and the TableColums variables
@@ -66,6 +66,9 @@ public class ClientUsageTableController implements Initializable {
     @FXML
     private TableColumn<ClientUsageData, Timestamp> colLogin;
 
+    /**
+     * actionCloseUsageTable method: ActionEvent by user to exit table
+     */
     @FXML
     private void actionCloseUsageTable(ActionEvent event) {
 
@@ -82,29 +85,29 @@ public class ClientUsageTableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        setTheCells(); 
-        
+        setTheCells(); //Call method
+
         //Use try-with-resource so it will close all after it leaves the try/catch block
         try (Connection con = DriverManager.getConnection(theURL);
                 Statement stmt = con.createStatement(); //create the statement off connection
 
-                //Get the results set by executing the statement with the appropriate
-                //Query.  The query is established by what the user inputs with
-                //the getQuery method.
+                /*Get the results set by executing the statement with the appropriate
+                  Query.  The query is established by what the user inputs with
+                  the getQuery method
+                */
                 ResultSet rs = stmt.executeQuery(getQuery(QueryConsolidatorFXML.getStartDT(),
                         QueryConsolidatorFXML.getEndDT(), QueryConsolidatorFXML.getClient()))) {
 
             while (rs.next()) { //Loop through the ResultSet
 
-                //Create instances of the ClientUsageData and add them to the 
-                //ObservableList
+                /*Create instances of the ClientUsageData and add them to the 
+                  ObservableList
+                */
                 theData.add(new ClientUsageData(rs.getString("clientCode"),
                         rs.getString("userID"), rs.getString("firstName"),
                         rs.getString("lastName"), rs.getTimestamp("loginTimestamp")));
 
             }
-
-            System.out.println("Connected to database !");
 
         } catch (SQLException sqle) {
             System.out.println("Sql Exception :" + sqle.getMessage());
@@ -121,8 +124,8 @@ public class ClientUsageTableController implements Initializable {
     }
 
     /**
-     * Method to link the cells for TableColumns with the variables in the
-     * ClientUsageData class.
+     * setTheCells method: to link the cells for TableColumns with the variables 
+     * in the ClientUsageData class.
      */
     private void setTheCells() {
 
@@ -134,6 +137,12 @@ public class ClientUsageTableController implements Initializable {
 
     }
 
+    /**
+     * getQuery method: For getting the appropriate query based on fields user
+     * entered or did not enter
+     * 
+     * @return query
+     */
     private String getQuery(String start, String end, String client) {
         String query = "";
 
@@ -234,4 +243,4 @@ public class ClientUsageTableController implements Initializable {
         return query;
     }
 
-}
+} //End ClientUsageTableController class

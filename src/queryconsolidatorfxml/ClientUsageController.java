@@ -7,10 +7,12 @@ package queryconsolidatorfxml;
  * @Date: Oct 5, 2017
  * @Description: This class is the controller for the ClientUsage.fxml of the
  * U/I The client usage is the scene that appears when selecting option 1 from
- * the main scene.
+ * the main scene.  This class extends MainSceneController class in order to use
+ * a Stage variable, Verify & SceneController instances.
  * @Reference:
  */
-//import java.sql.Connection;
+
+//Imports
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -32,10 +34,9 @@ public class ClientUsageController extends MainSceneController implements Initia
     @FXML
     private Button btnBackClientUsage; //Used to get reference to stage and that's it.
 
+    //Delare the FXML fields
     @FXML
-    Label lblSelect; //Label to populate if verify fails
-
-    //TextFields
+    Label lblSelect; 
     @FXML
     private TextField tfStartDate;
     @FXML
@@ -82,8 +83,9 @@ public class ClientUsageController extends MainSceneController implements Initia
 
         lblSelect.setText(""); 
 
-        //Program allows no entry of dates (wildcards).  If they enter
-        //a date in either the start or end, check they are valid formats.
+        /*Program allows no entry of dates (wildcards).  If they enter
+          a date in either the start or end, check they are valid formats.
+        */
         if (!verify.isDate(tfStartDate, tfEndDate)) {
 
             lblSelect.setText("Invalid date format");
@@ -104,7 +106,8 @@ public class ClientUsageController extends MainSceneController implements Initia
             /*Call SceneController instance method with 1 argument to lay on top
               of client usage scene on a new stage (Not replace scene onto stage 
               currently there).  Note this instance is inherited from 
-              MainSceneController class*/
+              MainSceneController class
+            */
             sceneController.setScene(QueryConsolidatorFXML.getClientUsageTableFXML());
 
         }
@@ -119,4 +122,4 @@ public class ClientUsageController extends MainSceneController implements Initia
 
     }
 
-}
+} //End ClientUsageController class

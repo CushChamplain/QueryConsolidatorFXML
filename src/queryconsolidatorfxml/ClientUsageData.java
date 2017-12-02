@@ -1,5 +1,6 @@
 package queryconsolidatorfxml;
 
+//Imports
 import java.sql.Timestamp;
 
 /**
@@ -12,16 +13,25 @@ import java.sql.Timestamp;
  * Reference:
  * https://www.youtube.com/watch?v=3tmz-0g3EPs
  */
-//Imports
+
 //Begin Subclass ClientUsageData
 public class ClientUsageData {
 
+    //Declare variables
     private String clientCode;
     private String userID;
     private String firstName;
     private String lastName;
     private Timestamp loginTimestamp;
 
+    /**
+     * Constructor with parameters
+     * @param clientCode
+     * @param userID
+     * @param firstName
+     * @param lastName
+     * @param loginTimestamp
+     */
     public ClientUsageData(String clientCode, String userID, String firstName,
             String lastName, Timestamp loginTimestamp) {
         this.clientCode = clientCode;
@@ -31,6 +41,9 @@ public class ClientUsageData {
         this.loginTimestamp = loginTimestamp;
     }
 
+    /**
+     * Default constructor
+     */
     ClientUsageData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
